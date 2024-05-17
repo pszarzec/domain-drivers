@@ -4,7 +4,7 @@ namespace DomainDrivers.SmartSchedule.Tests.Planning.Parallelization;
 
 public class ParallelizationTest
 {
-    private static readonly StageParallelization StageParallelization = new StageParallelization();
+    private static readonly StageParallelization StageParallelization = new();
 
     [Fact]
     public void EverythingCanBeDoneInParallelWhenThereAreNoDependencies()
@@ -14,7 +14,7 @@ public class ParallelizationTest
         var stage2 = new Stage("Stage2");
 
         //when
-        var sortedStages = StageParallelization.Of(new HashSet<Stage>() { stage1, stage2 });
+        var sortedStages = StageParallelization.Of(new HashSet<Stage> { stage1, stage2 });
 
         //then
         Assert.Equal(1, sortedStages.All.Count);
@@ -31,7 +31,7 @@ public class ParallelizationTest
         stage2.DependsOn(stage1);
         stage3.DependsOn(stage1);
         stage4.DependsOn(stage2);
-
+        
         //when
         var sortedStages = StageParallelization.Of(new HashSet<Stage> { stage1, stage2, stage3, stage4 });
 
